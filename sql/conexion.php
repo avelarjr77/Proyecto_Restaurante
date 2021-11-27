@@ -2,7 +2,7 @@
 
 error_reporting('E_ERROR'); 
 
-    $host="localhost:3308";
+    $host="localhost:3306";
     $user="root";
     $password="";
     $bd="bd_restaurante";

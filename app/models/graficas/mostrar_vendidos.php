@@ -1,9 +1,8 @@
 <?php
 
-    include("../../../sql/conexion.php");
-
+include("../../../sql/conexion.php");
     $platillos=[];
-    $vendidos=[];
+    $datos=[]; 
 
     $sql="SELECT receta_catalogo.nom_receta platillos, SUM(pedido_detalle.cantidad) vendidos
     from platillo
@@ -18,18 +17,18 @@
     if(mysqli_num_rows($resultado)>0){
         while($fila=mysqli_fetch_array($resultado)){
             array_push($platillos, $fila['platillos']);
-            array_push($vendidos, $fila['total']);
+            array_push($datos, $fila['vendidos']);
         }
 
         $response=array(
             'success'=>true,
-            'vendidos'=>$vendidos,
+            'datos'=>$datos,
             'platillos'=>$platillos,
-            'total'=>mysqli_num_rows($resultado)
+            'vendidos'=>mysqli_num_rows($resultado)
         );
 
         mysqli_close($conn);
-        unset($platillos, $vendidos, $resultado);
+        unset($platillos, $datos, $resultado);
 
     }else{
         $response=array('success'=>false, 'error'=>'No fue posible extraer datos de la base de datos');

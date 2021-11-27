@@ -1,5 +1,6 @@
 $(document).ready(function () {
     ventasPlatillos();
+    ventas();
 });
 
 function ventas(){
@@ -42,10 +43,9 @@ function ventas(){
 
 function ventasPlatillos(){
 
-    var platillos=[];
-    
+    var datos=[];    
     var labels=[];
-    var vendidos=[];
+
 
     $.ajax({
         data: {},
@@ -57,43 +57,41 @@ function ventasPlatillos(){
         success: function(response){ 
             if(response.success){
                 for (let i = 0; i < response.total; i++) {
-                    platillos.push(response.platillos[i]);
-                    vendidos=vendidos+parseInt(response.platillos[i]);
-                    labels.push(response.pedidos[i]);
+                    datos.push(response.datos[i]);                    
+                    labels.push(response.platillos[i]);
                 }
-        const ctx = document.getElementById('ventasPlatillos').getContext('2d');
-        const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: platillos,
-                backgroundColor: [
-                    'rgb(5, 201, 38, 0.2)',
-                    'rgb(201, 26, 5, 0.2)'
+                var ctx = document.getElementById('ventasPlatillos').getContext('2d');
+                var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: datos,
+                        backgroundColor: [
+                    'rgb(5, 201, 38, 0.2)'
+                    
                 ],
                 borderColor: [
-                    'rgb(5, 201, 38, 1)',
-                    'rgb(201, 26, 5, 1)'
+                    'rgb(5, 201, 38, 1)'
                 ],
                 borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: '# Total Estado de Pedidos'
-            }
-        },
-    });
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '# Total '
+                }
+            },
+        });
 
-    } else{
-        swal('¡Error!', response.error, 'error')
-    }
-    }, 
-        error: function(){
-        swal('¡Error!','Error de ejecución del Ajax', 'error');
-    },
-        complete: function(){} 
+        } else{
+            swal('¡Error!', response.error, 'error')
+        }
+        }, 
+            error: function(){
+            swal('¡Error!','Error de ejecución del Ajax', 'error');
+        },
+            complete: function(){} 
     }); 
 }
