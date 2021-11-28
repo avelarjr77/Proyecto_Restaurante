@@ -1,11 +1,12 @@
 <?php
 
 include("../../../sql/conexion.php");
+
     $platillos=[];
     $datos=[]; 
 
     $sql="SELECT receta_catalogo.nom_receta platillos, SUM(pedido_detalle.cantidad) vendidos
-    from platillo
+    FROM platillo
     INNER JOIN receta_catalogo
     ON platillo.cod_receta_catalogo = receta_catalogo.cod_receta_catalogo
     INNER JOIN pedido_detalle
@@ -17,7 +18,7 @@ include("../../../sql/conexion.php");
     if(mysqli_num_rows($resultado)>0){
         while($fila=mysqli_fetch_array($resultado)){
             array_push($platillos, $fila['platillos']);
-            array_push($datos, $fila['vendidos']);
+            array_push($datos, $fila['vendidos']);  
         }
 
         $response=array(
