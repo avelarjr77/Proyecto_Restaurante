@@ -1,6 +1,37 @@
 $(document).ready(function () {
     ventasPlatillos();
     ventas();
+
+    $("#calendario").daterangepicker({
+        "locale":{
+            "format": "DD/MM/YYY",
+            "separator": " - ",
+            "applyLabel": "Aplicar",
+            "cacelLabel":  "Cancelar",
+            "daysOfWeek": [
+                "Dom",
+                "Lun",
+                "Mar",
+                "Mié",
+                "Jue",
+                "Vie",
+                "Sáb"
+            ],
+            "monthNames":[
+                "Enero",
+                "Febrero",
+                "Marzo","Abril",
+                "Mayo", 
+                "Junio", 
+                "Julio", 
+                "Agosto", 
+                "Septiembre",
+                "Octubre", 
+                "Noviembre",
+                "Diciembre"
+            ]
+        }
+    });
 });
 
 function ventas(){
