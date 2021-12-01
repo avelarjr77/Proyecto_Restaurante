@@ -2,19 +2,19 @@
 
 include("../../../sql/conexion.php");
 
-    $total=[];
+    $total_venta=[];
     
 
     $fechas=explode(" - ", $_POST['fechas']);
 
-    $sql="SELECT sum(cantidad) total 
-    FROM pedido_detalle 
-    INNER JOIN pedidos
-    ON pedido_detalle.cod_pedidos = pedidos.cod_pedidos
-    WHERE cod_estado=1 AND fecha_pedido 
-    BETWEEN STR_TO_DATE ('$fechas[0]', '%d/%m/%Y') 
-    AND STR_TO_DATE ('$fechas[1]', '%d/%m/%Y')
-    ";
+    $sql="SELECT (pt.precio*sum(pd.cantidad)) total_venta, rc.nom_receta AS platillo, p.fecha_pedido
+        FROM pedido_detalle pd
+        INNER JOIN pedidos p ON pd.cod_pedidos = p.cod_pedidos
+        INNER JOIN platillo pt ON pd.cod_platillo = pt.cod_platillo
+        INNER JOIN receta_catalogo rc ON pt.cod_receta_catalogo = rc.cod_receta_catalogo
+        WHERE pd.cod_platillo = pt.cod_platillo AND pd.cod_estado='1' AND p.fecha_pedido BETWEEN '2021-09-01' 
+    	AND '2021-11-29'
+        GROUP BY pd.cod_pedido_detalle; ";
 
     $resultado=mysqli_query($conn, $sql);
 
@@ -26,9 +26,9 @@ include("../../../sql/conexion.php");
 
         $response=array(
             'success'=>true,
-            'datos'=>$datos,
-            'total'=>$total,
-            'vendidos'=>mysqli_num_rows($resultado)
+            'datos'=>$datos
+            'total_ventas'=>$total_ventan,
+            'total_ventas'=>mysqli_num_rows($resultado)
         );
 
         mysqli_close($conn);

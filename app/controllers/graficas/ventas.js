@@ -60,11 +60,10 @@ function ventas(){
                 const ventas = new Chart(ctx, {
                     type: 'horizontalBar',
                     data: {
-                        labels: ['Vendidos'],
-                        datasets: [{
-                            label: '# Cantidad vendida',
-                            data: [12],
-                            backgroundColor: [
+                                labels: labels,
+                                datasets: [{
+                                      data: datos,
+                                      backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)'
                             ],
                             borderColor: [
