@@ -5,13 +5,13 @@ include("../../../sql/conexion.php");
     $platillos=[];
     $datos=[]; 
 
-    $sql="SELECT receta_catalogo.nom_receta platillos, pedido_detalle.cantidad vendidos
+    $sql="SELECT receta_catalogo.nom_receta platillos, SUM(pedido_detalle.cantidad) vendidos
         FROM platillo
         INNER JOIN receta_catalogo
         ON platillo.cod_receta_catalogo = receta_catalogo.cod_receta_catalogo
         INNER JOIN pedido_detalle
         ON platillo.cod_platillo=pedido_detalle.cod_platillo
-        WHERE MAX(cantidad)
+    
         GROUP BY platillos";
 
     $resultado=mysqli_query($conn, $sql);
